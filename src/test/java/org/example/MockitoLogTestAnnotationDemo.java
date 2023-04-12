@@ -6,15 +6,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 
-public class MockitoLoginImplTestAnnotationDemo {
+public class MockitoLogTestAnnotationDemo{
     @InjectMocks
     private static LoginMgmtServiceImpl iLoginMgmt;
     @Mock
     private static ILoginDao iLoginDaoMock;
-    @Spy
-    private static ILoginDao iLoginDaoSpy;
-
-    public MockitoLoginImplTestAnnotationDemo() {
+   /* @Spy
+    private static ILoginDao iLoginDaoSpy;*/
+    // Ambiguity may occur using @mock and @spy at same time for ILoginDao as both mock object and spy object are ready to inject the service class
+    // Therefore we create its instance inside the particular method in which spy is used.
+    public MockitoLogTestAnnotationDemo() {
         MockitoAnnotations.openMocks(this);
     }
 
@@ -41,6 +42,7 @@ public class MockitoLoginImplTestAnnotationDemo {
 
     @Test
     public void testRegisterWithSpy() {
+        ILoginDao iLoginDaoSpy=Mockito.spy(ILoginDao.class);
         LoginMgmtServiceImpl iLoginMgmtSpy = new LoginMgmtServiceImpl(iLoginDaoSpy);
         iLoginMgmtSpy.registerUser("Ram", "Hello");
         iLoginMgmtSpy.registerUser("hari", "HelloWorld");
@@ -48,5 +50,7 @@ public class MockitoLoginImplTestAnnotationDemo {
         Mockito.verify(iLoginDaoSpy, Mockito.times(1)).addUser("Ram", "Hello");
         Mockito.verify(iLoginDaoSpy, Mockito.times(0)).addUser("shyam", "Hello");
         Mockito.verify(iLoginDaoSpy, Mockito.times(1)).addUser("shyam", "kxa");
+
+
     }
 }
