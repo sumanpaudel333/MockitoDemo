@@ -31,6 +31,7 @@ public class MockitoLogTestAnnotationDemo{
     public void testLoginWithInValidCredentials() {
         //provide stub(temporary functionalities) for DAO's authenticate method
         Mockito.when(iLoginDaoMock.authenticate("hello", "world")).thenReturn(0);
+        Mockito.doReturn(iLoginDaoMock).when(iLoginDaoMock.authenticate("hello","world"));
         //Unit testing
         Assertions.assertFalse(iLoginMgmt.login("hello", "world"));
     }
@@ -50,7 +51,5 @@ public class MockitoLogTestAnnotationDemo{
         Mockito.verify(iLoginDaoSpy, Mockito.times(1)).addUser("Ram", "Hello");
         Mockito.verify(iLoginDaoSpy, Mockito.times(0)).addUser("shyam", "Hello");
         Mockito.verify(iLoginDaoSpy, Mockito.times(1)).addUser("shyam", "kxa");
-
-
     }
 }

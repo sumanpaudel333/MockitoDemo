@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.DAO.ILoginDao;
-import org.example.service.ILoginMgmt;
 import org.example.service.LoginMgmtServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

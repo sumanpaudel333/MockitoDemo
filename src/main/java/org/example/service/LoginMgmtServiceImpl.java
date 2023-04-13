@@ -9,26 +9,23 @@ public class LoginMgmtServiceImpl implements ILoginMgmt {
         this.iLoginDao = iLoginDao;
     }
 
-    public LoginMgmtServiceImpl() {
-    }
-
     @Override
     public boolean login(String username, String password) {
-        if (username.equals("") || password.equals("")){
+        if (username.equals("") || password.equals("")) {
             throw new IllegalArgumentException("Empty Credentials");
         }
-        int count=iLoginDao.authenticate(username,password);
-        if (count==0)
-        return false;
+        int count = iLoginDao.authenticate(username, password);
+        if (count == 0)
+            return false;
         else
             return true;
     }
-    public String registerUser(String user,String role){
-        if (!user.equalsIgnoreCase("") || role.equalsIgnoreCase("guest")){
-            iLoginDao.addUser(user,role);
+
+    public String registerUser(String user, String role) {
+        if (!user.equalsIgnoreCase("") || role.equalsIgnoreCase("guest")) {
+            iLoginDao.addUser(user, role);
             return "User added";
-        }
-        else{
+        } else {
             return "User Not added";
         }
 
